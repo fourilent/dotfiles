@@ -1,0 +1,66 @@
+[user]
+name = fourilent
+email = 48886995+fourilent@users.noreply.github.com
+signingKey = ~/.ssh/id_ed25519.pub
+
+[alias]
+ci = commit
+co = checkout
+st = status
+graph = log --graph --all --date=relative --pretty=tformat:'<%h> %C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'
+unstage = restore --staged
+update-develop = "!git checkout develop && git fetch upstream && git merge develop upstream/develop && git push origin develop"
+update-pr = "!f() { \
+    if [ -z \"$1\" ]; then \
+        echo 'Error: Branch name is required.'; \
+    else \
+        git checkout $1 && git commit --amend -C HEAD && git push -f origin $1; \
+    fi \
+}; f"
+update-branch = "!f() { \
+    if [ -z \"$1\" ]; then \
+        echo 'Error: Branch name is required.'; \
+    else \
+        git checkout $1 && git rebase develop $1; \
+    fi \
+}; f"
+
+[color]
+ui = auto
+
+[commit]
+gpgsign = true
+verbose = true
+
+[core]
+editor = code -w
+
+[diff]
+algorithm = histogram
+
+[fetch]
+prune = true
+
+[filter "lfs"]
+clean = git-lfs clean %f
+smudge = git-lfs smudge %f
+required = true
+
+[gpg]
+format = ssh
+
+[merge]
+conflictstyle = zdiff3
+
+[pull]
+ff = only
+
+[push]
+default = current
+
+[rebase]
+autoSquash = true
+autoStash = true
+
+[rerere]
+enabled = true
